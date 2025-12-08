@@ -3,31 +3,32 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../../store/store';
 import { logout } from '../../store/slices/auth.slice';
 import Icon from '../Icon/Icon';
-import { useState } from 'react';
+import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 
 const Layout = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const { user } = useSelector((state: RootState) => state.auth);
+  const { user, isAuthenticated } = useSelector((state: RootState) => state.auth);
 
   const handleLogout = async () => {
     await dispatch(logout());
-    navigate('/login');
+    navigate('/', { replace: true });
   };
 
   return (
     <div className="flex h-screen bg-[#222831]/95 dark:bg-gray-900">
       <aside className="w-64 bg-[#353E55] dark:bg-gray-800 shadow-lg text-white">
         <div className="p-6">
-          <h1 className="text-2xl font-bold text-primary-600 dark:text-primary-400 flex gap-2 items-center">
+          <Link to={isAuthenticated ? '/app' : '/'} className="flex items-center gap-3">
             <Icon icon="lucide:calendar" size={40} />
-            <p className='text-3xl'> Schedule</p>
-          </h1>
+            <p className="text-3xl font-bold">Schedule</p>
+          </Link>
         </div>
 
         <nav className="px-4 space-y-2 ">
           <Link
-            to="/"
+            to="/app"
             className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-900 focus:bg-gray-800 focus:border-l-4 dark:hover:bg-gray-700 transition-colors"
           >
             <Icon icon="mdi:calendar-check" size={20} />

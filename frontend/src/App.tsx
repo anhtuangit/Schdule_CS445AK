@@ -13,6 +13,7 @@ import ProfilePage from './pages/Profile/ProfilePage';
 import AdminDashboard from './pages/Admin/AdminDashboard';
 import ProtectedRoute from './components/Auth/ProtectedRoute';
 import AdminRoute from './components/Auth/AdminRoute';
+import LandingPage from './pages/LandingPage'; // <-- added import
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
@@ -40,11 +41,14 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/login" element={!isAuthenticated ? <LoginPage /> : <Navigate to="/" />} />
-      
+      <Route path="/login" element={!isAuthenticated ? <LoginPage /> : <Navigate to="/app" />} />
+
+      {/* Public landing at root; nếu đã auth chuyển sang /app */}
+      <Route path="/" element={!isAuthenticated ? <LandingPage /> : <Navigate to="/app" />} />
+
       <Route element={<Layout />}>
         <Route
-          path="/"
+          path="/app" // <-- changed from "/" to "/app"
           element={
             <ProtectedRoute>
               <PersonalTasksPage />
