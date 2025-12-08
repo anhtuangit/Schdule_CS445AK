@@ -8,7 +8,7 @@ PORT=5000
 NODE_ENV=development
 
 # MongoDB
-MONGODB_URI=mongodb://localhost:27017/schedule18
+MONGODB_URI=mongodb://localhost:27017/schedule
 
 # JWT
 JWT_SECRET=your-super-secret-jwt-key-change-this-in-production-min-32-chars
@@ -33,23 +33,5 @@ MAX_FILE_SIZE=10485760
 UPLOAD_PATH=./uploads
 ```
 
-## Hướng dẫn lấy thông tin:
 
-1. **MongoDB URI**: Nếu dùng MongoDB Compass local, giữ nguyên `mongodb://localhost:27017/schedule18`
-
-2. **JWT_SECRET**: Tạo một chuỗi bí mật ngẫu nhiên (ít nhất 32 ký tự)
-
-3. **Google OAuth2**:
-   - Vào https://console.cloud.google.com/
-   - Tạo project mới hoặc chọn project
-   - Vào "APIs & Services" > "Credentials"
-   - Tạo "OAuth 2.0 Client ID"
-   - Thêm authorized redirect URIs: `http://localhost:5173`
-   - Copy Client ID và Client Secret
-
-4. **Email (Nodemailer)**:
-   - Nếu dùng Gmail, cần tạo "App Password"
-   - Vào Google Account > Security > 2-Step Verification > App passwords
-   - Tạo app password cho "Mail"
-   - Dùng app password này cho EMAIL_PASS
 
