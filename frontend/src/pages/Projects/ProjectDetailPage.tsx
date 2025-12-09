@@ -117,7 +117,7 @@ const ProjectDetailPage = () => {
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
-        distance: 8, // 8px movement before drag starts
+        distance: 8,
       },
     }),
     useSensor(KeyboardSensor, {
@@ -142,7 +142,6 @@ const ProjectDetailPage = () => {
     const activeId = active.id as string;
     const overId = over.id as string;
 
-    // Handle column drag and drop
     if (active.data.current?.type === 'COLUMN') {
       if (activeId === overId) {
         return;
@@ -159,7 +158,6 @@ const ProjectDetailPage = () => {
 
         const newColumns = arrayMove(sortedColumns, oldIndex, newIndex);
 
-        // Update column orders on server
         const updatePromises = newColumns.map((col, index) =>
           updateColumnService(col._id, { order: index })
         );
@@ -198,7 +196,6 @@ const ProjectDetailPage = () => {
       }
 
       try {
-        // Get sorted tasks from source column
         const sortedSourceTasks = [...sourceColumn.tasks].sort((a, b) => (a.order || 0) - (b.order || 0));
         const task = sortedSourceTasks.find(t => t._id === activeId);
 
@@ -209,9 +206,7 @@ const ProjectDetailPage = () => {
 
         const oldIndex = sortedSourceTasks.findIndex(t => t._id === activeId);
 
-        // Optimistic update for UI
         if (sourceColumnId === destColumnId) {
-          // Reorder within same column
           const sortedDestTasks = [...sourceColumn.tasks].sort((a, b) => (a.order || 0) - (b.order || 0));
           const newIndex = sortedDestTasks.findIndex(t => t._id === overId);
           if (newIndex === -1) return;
@@ -219,17 +214,14 @@ const ProjectDetailPage = () => {
           const newTasks = arrayMove(sortedDestTasks, oldIndex, newIndex);
           dispatch(updateColumn({ ...sourceColumn, tasks: newTasks }));
         } else {
-          // Move to different column
           if (!destColumn) {
             toast.error('Không tìm thấy cột đích');
             return;
           }
 
-          // Remove from source column
           const newSourceTasks = sortedSourceTasks.filter(t => t._id !== task._id);
           dispatch(updateColumn({ ...sourceColumn, tasks: newSourceTasks }));
 
-          // Add to destination column
           const sortedDestTasks = [...destColumn.tasks].sort((a, b) => (a.order || 0) - (b.order || 0));
           const newIndex = sortedDestTasks.findIndex(t => t._id === overId);
           const insertIndex = newIndex === -1 ? sortedDestTasks.length : newIndex;
@@ -238,7 +230,6 @@ const ProjectDetailPage = () => {
           dispatch(updateColumn({ ...destColumn, tasks: newDestTasks }));
         }
 
-        // Update on server
         if (!destColumn) {
           toast.error('Không tìm thấy cột đích');
           return;
@@ -255,7 +246,6 @@ const ProjectDetailPage = () => {
           newOrder: finalIndex
         });
 
-        // Refresh to get latest data from server
         if (id) {
           dispatch(fetchProjectById(id));
         }
@@ -266,7 +256,6 @@ const ProjectDetailPage = () => {
       }
     }
   };
-
 
   const handleCreateColumn = async (name: string) => {
     if (!id) return;
@@ -349,7 +338,6 @@ const ProjectDetailPage = () => {
     });
   };
 
-  // Check if current user is owner or editor
   const isOwner = currentProject && user && currentProject.ownerId._id === user.id;
   const userMember = currentProject?.members.find(m => m.userId._id === user?.id);
   const isEditor = isOwner || userMember?.role === 'editor';
@@ -362,7 +350,6 @@ const ProjectDetailPage = () => {
   };
 
   const handleViewTask = async (task: any) => {
-    // Refresh task data to get latest comments
     if (id) {
       try {
         const response = await getProjectById(id);
@@ -376,7 +363,6 @@ const ProjectDetailPage = () => {
           setViewingTask(task);
         }
       } catch (error) {
-        // Fallback to original task if refresh fails
         setViewingTask(task);
       }
     } else {
@@ -422,7 +408,6 @@ const ProjectDetailPage = () => {
             )}
           </div>
 
-          {/* Members section */}
           <div className="ml-4">
             <div className="flex items-center gap-2 mb-2">
               <button
@@ -456,7 +441,6 @@ const ProjectDetailPage = () => {
                   Thành viên
                 </h3>
                 <div className="space-y-2 max-h-64 overflow-y-auto">
-                  {/* Owner */}
                   <div className="flex items-center justify-between p-2 rounded-lg bg-slate-700/50 border border-slate-600">
                     <div className="flex items-center gap-2">
                       {currentProject.ownerId.picture ? (
@@ -481,7 +465,6 @@ const ProjectDetailPage = () => {
                     </div>
                   </div>
 
-                  {/* Members */}
                   {currentProject.members.map((member) => (
                     <div
                       key={member.userId._id}
@@ -625,9 +608,7 @@ const ProjectDetailPage = () => {
             setSelectedColumnId('');
           }}
           onTaskUpdate={(updatedTask) => {
-            // Update selected task with new data (especially comments)
             setSelectedTask(updatedTask);
-            // Also refresh project to update task in columns
             if (id) {
               dispatch(fetchProjectById(id));
             }
@@ -726,4 +707,3 @@ const ProjectDetailPage = () => {
 };
 
 export default ProjectDetailPage;
-

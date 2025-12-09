@@ -29,29 +29,29 @@ const LabelsPage = () => {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500"></div>
+      <div className="flex items-center justify-center min-h-screen bg-slate-900">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-500"></div>
       </div>
     );
   }
 
   return (
-    <div className="p-6 text-white">
-      <h1 className="text-3xl font-bold mb-6">
+    <div className="p-6 text-slate-100 bg-slate-900 min-h-screen">
+      <h1 className="text-3xl font-bold mb-6 text-slate-100">
         Nhãn dán
       </h1>
 
       <div className="space-y-8">
         {Object.entries(groupedLabels).map(([type, typeLabels]) => (
           <div key={type}>
-            <h2 className="text-xl font-semibold mb-4">
+            <h2 className="text-xl font-semibold mb-4 text-slate-200">
               {typeNames[type] || type}
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {typeLabels.map(label => (
                 <div
                   key={label._id}
-                  className="card bg-[#57595B] hover:shadow-xl transition-all duration-300 border-4 border-gray-200 hover:border-opacity-50"
+                  className="bg-slate-800 border border-slate-700 hover:shadow-xl transition-all duration-300 hover:border-opacity-50 rounded-lg p-6"
                   style={{
                     borderColor: `${label.color}30`
                   }}
@@ -71,12 +71,12 @@ const LabelsPage = () => {
                       />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-semibold text-white mb-1 truncate"
+                      <h3 className="font-semibold text-slate-100 mb-1 truncate"
                         style={{ color: label.color }}>
                         {label.name}
                       </h3>
                       {label.description && (
-                        <p className="text-sm text-white mb-3 line-clamp-2">
+                        <p className="text-sm text-slate-300 mb-3 line-clamp-2">
                           {label.description}
                         </p>
                       )}
@@ -104,8 +104,8 @@ const LabelsPage = () => {
 
       {labels.length === 0 && (
         <div className="text-center py-12">
-          <Icon icon="mdi:label-outline" size={64} className="mx-auto text-white mb-4" />
-          <p className="text-white">Chưa có nhãn dán nào</p>
+          <Icon icon="mdi:label-outline" size={64} className="mx-auto text-slate-400 mb-4" />
+          <p className="text-slate-400">Chưa có nhãn dán nào</p>
         </div>
       )}
     </div>
@@ -113,4 +113,3 @@ const LabelsPage = () => {
 };
 
 export default LabelsPage;
-

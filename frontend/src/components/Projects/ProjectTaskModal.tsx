@@ -14,9 +14,6 @@ interface ProjectTaskModalProps {
   onTaskUpdate?: (updatedTask: ProjectTask) => void;
 }
 
-/**
- * Project Task Modal
- */
 const ProjectTaskModal = ({ task, labels, onClose, onSave, onTaskUpdate }: ProjectTaskModalProps) => {
   const [formData, setFormData] = useState({
     title: '',
@@ -169,15 +166,15 @@ const ProjectTaskModal = ({ task, labels, onClose, onSave, onTaskUpdate }: Proje
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-[#57595B] rounded-lg shadow-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+      <div className="bg-gray-800 rounded-lg shadow-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
         <div className="p-6">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-gray-100 ">
+            <h2 className="text-2xl font-bold text-gray-100">
               {task ? 'Chỉnh sửa task' : 'Thêm task mới'}
             </h2>
             <button
               onClick={onClose}
-              className="text-gray-100 hover:text-gray-700  "
+              className="text-gray-400 hover:text-gray-200"
             >
               <Icon icon="mdi:close" size={24} />
             </button>
@@ -185,7 +182,7 @@ const ProjectTaskModal = ({ task, labels, onClose, onSave, onTaskUpdate }: Proje
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-100 mb-1">
+              <label className="block text-sm font-medium text-gray-300 mb-1">
                 Tiêu đề *
               </label>
               <input
@@ -193,30 +190,30 @@ const ProjectTaskModal = ({ task, labels, onClose, onSave, onTaskUpdate }: Proje
                 required
                 value={formData.title}
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                className="input bg-transparent"
+                className="w-full px-3 py-2 border border-gray-600 rounded-md bg-gray-700 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-100 mb-1">
+              <label className="block text-sm font-medium text-gray-300 mb-1">
                 Mô tả ngắn
               </label>
               <input
                 type="text"
                 value={formData.shortDescription}
                 onChange={(e) => setFormData({ ...formData, shortDescription: e.target.value })}
-                className="input bg-transparent"
+                className="w-full px-3 py-2 border border-gray-600 rounded-md bg-gray-700 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-100 dark:text-gray-300 mb-1">
+              <label className="block text-sm font-medium text-gray-300 mb-1">
                 Mô tả chi tiết
               </label>
               <textarea
                 value={formData.detailedDescription}
                 onChange={(e) => setFormData({ ...formData, detailedDescription: e.target.value })}
-                className="input bg-transparent"
+                className="w-full px-3 py-2 border border-gray-600 rounded-md bg-gray-700 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 rows={4}
               />
             </div>
@@ -224,7 +221,7 @@ const ProjectTaskModal = ({ task, labels, onClose, onSave, onTaskUpdate }: Proje
             {/* Labels */}
             {Object.entries(groupedLabels).map(([type, typeLabels]) => (
               <div key={type}>
-                <label className="block text-sm font-medium text-gray-100 mb-2">
+                <label className="block text-sm font-medium text-gray-300 mb-2">
                   {type === 'task_type' ? 'Loại công việc' :
                     type === 'status' ? 'Trạng thái' :
                       type === 'difficulty' ? 'Độ khó' :
@@ -240,7 +237,7 @@ const ProjectTaskModal = ({ task, labels, onClose, onSave, onTaskUpdate }: Proje
                         onClick={() => toggleLabel(label._id)}
                         className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 flex items-center gap-2 shadow-sm hover:shadow-md ${isSelected
                           ? 'text-white transform scale-105'
-                          : 'bg-[#B6AE9F] text-gray-900  hover:bg-gray-600 dark:hover:bg-gray-600'
+                          : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
                           }`}
                         style={
                           isSelected
@@ -268,13 +265,13 @@ const ProjectTaskModal = ({ task, labels, onClose, onSave, onTaskUpdate }: Proje
             {/* Subtasks */}
             <div>
               <div className="flex items-center justify-between mb-2">
-                <label className="block text-sm font-medium text-gray-100 dark:text-gray-300">
+                <label className="block text-sm font-medium text-gray-300">
                   Chia nhỏ công việc
                 </label>
                 <button
                   type="button"
                   onClick={handleAddSubtask}
-                  className="btn btn-secondary text-sm bg-green-200"
+                  className="px-3 py-2 bg-green-600 text-white rounded-md hover:bg-green-500 transition-colors text-sm"
                 >
                   <Icon icon="mdi:plus" size={16} className="inline mr-1" />
                   Thêm công việc con
@@ -290,7 +287,7 @@ const ProjectTaskModal = ({ task, labels, onClose, onSave, onTaskUpdate }: Proje
                       subtasks[index] = { ...subtasks[index], completed: e.target.checked };
                       setFormData({ ...formData, subtasks });
                     }}
-                    className="w-6 h-6 rounded-xl flex"
+                    className="w-5 h-5 rounded border-gray-600 bg-gray-700 text-blue-500 focus:ring-blue-500"
                   />
                   <input
                     type="text"
@@ -300,7 +297,7 @@ const ProjectTaskModal = ({ task, labels, onClose, onSave, onTaskUpdate }: Proje
                       subtasks[index] = { ...subtasks[index], title: e.target.value };
                       setFormData({ ...formData, subtasks });
                     }}
-                    className="input flex-1 bg-transparent"
+                    className="w-full px-3 py-2 border border-gray-600 rounded-md bg-gray-700 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent flex-1"
                     placeholder="Nhập tên task con..."
                   />
                 </div>
@@ -310,7 +307,7 @@ const ProjectTaskModal = ({ task, labels, onClose, onSave, onTaskUpdate }: Proje
             {/* Attachments section - only show for existing tasks */}
             {currentTask && (
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-gray-300 mb-2">
                   File đính kèm
                 </label>
                 {currentTask.attachments && currentTask.attachments.length > 0 && (
@@ -318,19 +315,19 @@ const ProjectTaskModal = ({ task, labels, onClose, onSave, onTaskUpdate }: Proje
                     {currentTask.attachments.map((attachment, index) => (
                       <div
                         key={index}
-                        className="flex items-center justify-between p-2 bg-gray-100 dark:bg-gray-700 rounded-lg"
+                        className="flex items-center justify-between p-2 bg-gray-700 rounded-lg"
                       >
                         <div className="flex items-center gap-2 flex-1 min-w-0">
                           <Icon
                             icon={getFileIcon(getFileName(attachment))}
                             size={20}
-                            className="text-gray-600 dark:text-gray-300 flex-shrink-0"
+                            className="text-gray-300 flex-shrink-0"
                           />
                           <a
                             href={`${import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000'}${attachment}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-sm text-blue-600 dark:text-blue-400 hover:underline truncate"
+                            className="text-sm text-blue-400 hover:underline truncate"
                           >
                             {getFileName(attachment)}
                           </a>
@@ -338,7 +335,7 @@ const ProjectTaskModal = ({ task, labels, onClose, onSave, onTaskUpdate }: Proje
                         <button
                           type="button"
                           onClick={() => handleDeleteAttachment(attachment)}
-                          className="p-1 text-red-500 hover:text-red-700 transition-colors ml-2"
+                          className="p-1 text-red-500 hover:text-red-400 transition-colors ml-2"
                           title="Xóa file"
                         >
                           <Icon icon="mdi:delete" size={18} />
@@ -357,7 +354,7 @@ const ProjectTaskModal = ({ task, labels, onClose, onSave, onTaskUpdate }: Proje
                   />
                   <label
                     htmlFor="file-upload"
-                    className="btn btn-secondary flex items-center gap-2 cursor-pointer"
+                    className="px-4 py-2 bg-gray-600 text-gray-100 rounded-md hover:bg-gray-500 transition-colors cursor-pointer flex items-center gap-2"
                   >
                     <Icon icon="mdi:upload" size={16} />
                     {isUploading ? 'Đang upload...' : 'Thêm file'}
@@ -369,12 +366,12 @@ const ProjectTaskModal = ({ task, labels, onClose, onSave, onTaskUpdate }: Proje
             {/* Comments section - only show for existing tasks */}
             {currentTask && (
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-gray-300 mb-2">
                   Bình luận
                 </label>
                 <div className="space-y-2 mb-2">
                   {currentTask.comments?.map((comment, index) => (
-                    <div key={index} className="bg-gray-100 dark:bg-gray-700 rounded p-3">
+                    <div key={index} className="bg-gray-700 rounded p-3">
                       <div className="flex items-center gap-2 mb-1">
                         {comment.userId.picture ? (
                           <img
@@ -383,15 +380,15 @@ const ProjectTaskModal = ({ task, labels, onClose, onSave, onTaskUpdate }: Proje
                             className="w-6 h-6 rounded-full"
                           />
                         ) : (
-                          <div className="w-6 h-6 rounded-full bg-primary-500 flex items-center justify-center text-white text-xs">
+                          <div className="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs">
                             {comment.userId.name.charAt(0)}
                           </div>
                         )}
-                        <span className="text-sm font-medium text-gray-900 dark:text-white">
+                        <span className="text-sm font-medium text-gray-100">
                           {comment.userId.name}
                         </span>
                       </div>
-                      <p className="text-sm text-gray-700 dark:text-gray-300">
+                      <p className="text-sm text-gray-300">
                         {comment.content}
                       </p>
                     </div>
@@ -403,12 +400,12 @@ const ProjectTaskModal = ({ task, labels, onClose, onSave, onTaskUpdate }: Proje
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
                     placeholder="Thêm bình luận..."
-                    className="input flex-1"
+                    className="w-full px-3 py-2 border border-gray-600 rounded-md bg-gray-700 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent flex-1"
                   />
                   <button
                     type="button"
                     onClick={handleAddComment}
-                    className="btn btn-primary"
+                    className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-500 transition-colors"
                   >
                     Gửi
                   </button>
@@ -420,14 +417,14 @@ const ProjectTaskModal = ({ task, labels, onClose, onSave, onTaskUpdate }: Proje
               <button
                 type="button"
                 onClick={onClose}
-                className="btn btn-secondary"
+                className="px-4 py-2 bg-gray-600 text-gray-100 rounded-md hover:bg-gray-500 transition-colors"
                 disabled={isSaving}
               >
                 Hủy
               </button>
               <button
                 type="submit"
-                className="btn btn-primary"
+                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-500 transition-colors"
                 disabled={isSaving}
               >
                 {isSaving ? 'Đang lưu...' : 'Lưu'}
@@ -441,4 +438,3 @@ const ProjectTaskModal = ({ task, labels, onClose, onSave, onTaskUpdate }: Proje
 };
 
 export default ProjectTaskModal;
-

@@ -6,9 +6,7 @@ interface ProtectedRouteProps {
   children: React.ReactNode;
 }
 
-/**
- * Protected route - requires authentication
- */
+
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const { isAuthenticated, isLoading, user } = useSelector((state: RootState) => state.auth);
 

@@ -178,15 +178,15 @@ const TaskModal = ({ task, labels, selectedDate, onClose, onSave }: TaskModalPro
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+      <div className="bg-gray-800 rounded-lg shadow-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
         <div className="p-6">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+            <h2 className="text-2xl font-bold text-gray-100">
               {task ? 'Chỉnh sửa công việc' : 'Thêm công việc mới'}
             </h2>
             <button
               onClick={onClose}
-              className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+              className="text-gray-400 hover:text-gray-200"
             >
               <Icon icon="mdi:close" size={24} />
             </button>
@@ -194,7 +194,7 @@ const TaskModal = ({ task, labels, selectedDate, onClose, onSave }: TaskModalPro
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              <label className="block text-sm font-medium text-gray-300 mb-1">
                 Tiêu đề *
               </label>
               <input
@@ -202,37 +202,37 @@ const TaskModal = ({ task, labels, selectedDate, onClose, onSave }: TaskModalPro
                 required
                 value={formData.title}
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                className="input"
+                className="w-full px-3 py-2 border border-gray-600 rounded-md bg-gray-700 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              <label className="block text-sm font-medium text-gray-300 mb-1">
                 Mô tả ngắn
               </label>
               <input
                 type="text"
                 value={formData.shortDescription}
                 onChange={(e) => setFormData({ ...formData, shortDescription: e.target.value })}
-                className="input"
+                className="w-full px-3 py-2 border border-gray-600 rounded-md bg-gray-700 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              <label className="block text-sm font-medium text-gray-300 mb-1">
                 Mô tả chi tiết
               </label>
               <textarea
                 value={formData.detailedDescription}
                 onChange={(e) => setFormData({ ...formData, detailedDescription: e.target.value })}
-                className="input"
+                className="w-full px-3 py-2 border border-gray-600 rounded-md bg-gray-700 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 rows={4}
               />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label className="block text-sm font-medium text-gray-300 mb-1">
                   Thời gian bắt đầu *
                 </label>
                 <input
@@ -240,11 +240,11 @@ const TaskModal = ({ task, labels, selectedDate, onClose, onSave }: TaskModalPro
                   required
                   value={formData.startTime}
                   onChange={(e) => setFormData({ ...formData, startTime: e.target.value })}
-                  className="input"
+                  className="w-full px-3 py-2 border border-gray-600 rounded-md bg-gray-700 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label className="block text-sm font-medium text-gray-300 mb-1">
                   Thời gian kết thúc *
                 </label>
                 <input
@@ -252,7 +252,7 @@ const TaskModal = ({ task, labels, selectedDate, onClose, onSave }: TaskModalPro
                   required
                   value={formData.endTime}
                   onChange={(e) => setFormData({ ...formData, endTime: e.target.value })}
-                  className="input"
+                  className="w-full px-3 py-2 border border-gray-600 rounded-md bg-gray-700 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
             </div>
@@ -260,7 +260,7 @@ const TaskModal = ({ task, labels, selectedDate, onClose, onSave }: TaskModalPro
             {/* Labels */}
             {Object.entries(groupedLabels).map(([type, typeLabels]) => (
               <div key={type}>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-gray-300 mb-2">
                   {type === 'task_type' ? 'Loại công việc' :
                     type === 'status' ? 'Trạng thái' :
                       type === 'difficulty' ? 'Độ khó' :
@@ -276,7 +276,7 @@ const TaskModal = ({ task, labels, selectedDate, onClose, onSave }: TaskModalPro
                         onClick={() => toggleLabel(label._id)}
                         className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 flex items-center gap-2 shadow-sm hover:shadow-md ${isSelected
                           ? 'text-white transform scale-105'
-                          : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                          : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
                           }`}
                         style={
                           isSelected
@@ -304,7 +304,7 @@ const TaskModal = ({ task, labels, selectedDate, onClose, onSave }: TaskModalPro
             {/* File Attachments */}
             <div>
               <div className="flex items-center justify-between mb-2">
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                <label className="block text-sm font-medium text-gray-300">
                   File đính kèm
                 </label>
                 {task?._id && (
@@ -312,7 +312,7 @@ const TaskModal = ({ task, labels, selectedDate, onClose, onSave }: TaskModalPro
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
                     disabled={isUploading}
-                    className="btn btn-secondary text-sm"
+                    className="px-3 py-2 bg-gray-600 text-gray-100 rounded-md hover:bg-gray-500 transition-colors text-sm"
                   >
                     <Icon icon="mdi:upload" size={16} className="inline mr-1" />
                     {isUploading ? 'Đang upload...' : 'Thêm file'}
@@ -331,19 +331,19 @@ const TaskModal = ({ task, labels, selectedDate, onClose, onSave }: TaskModalPro
                   {formData.attachments.map((attachment, index) => (
                     <div
                       key={index}
-                      className="flex items-center justify-between p-2 bg-gray-100 dark:bg-gray-700 rounded-lg"
+                      className="flex items-center justify-between p-2 bg-gray-700 rounded-lg"
                     >
                       <div className="flex items-center gap-2 flex-1 min-w-0">
                         <Icon
                           icon={getFileIcon(getFileName(attachment))}
                           size={20}
-                          className="text-gray-600 dark:text-gray-300 flex-shrink-0"
+                          className="text-gray-300 flex-shrink-0"
                         />
                         <a
                           href={`${import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000'}${attachment}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-sm text-blue-600 dark:text-blue-400 hover:underline truncate"
+                          className="text-sm text-blue-400 hover:underline truncate"
                         >
                           {getFileName(attachment)}
                         </a>
@@ -352,7 +352,7 @@ const TaskModal = ({ task, labels, selectedDate, onClose, onSave }: TaskModalPro
                         <button
                           type="button"
                           onClick={() => handleDeleteAttachment(attachment)}
-                          className="text-red-500 hover:text-red-700 ml-2 flex-shrink-0"
+                          className="text-red-500 hover:text-red-400 ml-2 flex-shrink-0"
                         >
                           <Icon icon="mdi:delete" size={18} />
                         </button>
@@ -361,7 +361,7 @@ const TaskModal = ({ task, labels, selectedDate, onClose, onSave }: TaskModalPro
                   ))}
                 </div>
               ) : (
-                <p className="text-sm text-gray-500 dark:text-gray-400">
+                <p className="text-sm text-gray-400">
                   {task?._id ? 'Chưa có file đính kèm' : 'Lưu task trước để thêm file đính kèm'}
                 </p>
               )}
@@ -370,13 +370,13 @@ const TaskModal = ({ task, labels, selectedDate, onClose, onSave }: TaskModalPro
             {/* Subtasks */}
             <div>
               <div className="flex items-center justify-between mb-2">
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                <label className="block text-sm font-medium text-gray-300">
                   Task con
                 </label>
                 <button
                   type="button"
                   onClick={handleAddSubtask}
-                  className="btn btn-secondary text-sm"
+                  className="px-3 py-2 bg-gray-600 text-gray-100 rounded-md hover:bg-gray-500 transition-colors text-sm"
                 >
                   <Icon icon="mdi:plus" size={16} className="inline mr-1" />
                   Thêm task con
@@ -388,19 +388,19 @@ const TaskModal = ({ task, labels, selectedDate, onClose, onSave }: TaskModalPro
                     type="checkbox"
                     checked={subtask.completed}
                     onChange={(e) => handleSubtaskChange(index, 'completed', e.target.checked)}
-                    className="w-5 h-5"
+                    className="w-5 h-5 rounded border-gray-600 bg-gray-700 text-blue-500 focus:ring-blue-500"
                   />
                   <input
                     type="text"
                     value={subtask.title}
                     onChange={(e) => handleSubtaskChange(index, 'title', e.target.value)}
-                    className="input flex-1"
+                    className="w-full px-3 py-2 border border-gray-600 rounded-md bg-gray-700 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent flex-1"
                     placeholder="Nhập tên task con..."
                   />
                   <button
                     type="button"
                     onClick={() => handleRemoveSubtask(index)}
-                    className="text-red-500 hover:text-red-700"
+                    className="text-red-500 hover:text-red-400"
                   >
                     <Icon icon="mdi:delete" size={20} />
                   </button>
@@ -409,14 +409,14 @@ const TaskModal = ({ task, labels, selectedDate, onClose, onSave }: TaskModalPro
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              <label className="block text-sm font-medium text-gray-300 mb-1">
                 Nhắc nhở qua email
               </label>
               <input
                 type="datetime-local"
                 value={formData.emailReminder}
                 onChange={(e) => setFormData({ ...formData, emailReminder: e.target.value })}
-                className="input"
+                className="w-full px-3 py-2 border border-gray-600 rounded-md bg-gray-700 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
 
@@ -424,14 +424,14 @@ const TaskModal = ({ task, labels, selectedDate, onClose, onSave }: TaskModalPro
               <button
                 type="button"
                 onClick={onClose}
-                className="btn btn-secondary"
+                className="px-4 py-2 bg-gray-600 text-gray-100 rounded-md hover:bg-gray-500 transition-colors"
                 disabled={isSaving}
               >
                 Hủy
               </button>
               <button
                 type="submit"
-                className="btn btn-primary"
+                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-500 transition-colors"
                 disabled={isSaving}
               >
                 {isSaving ? 'Đang lưu...' : 'Lưu'}
@@ -445,4 +445,3 @@ const TaskModal = ({ task, labels, selectedDate, onClose, onSave }: TaskModalPro
 };
 
 export default TaskModal;
-

@@ -17,20 +17,20 @@ const TaskCard = ({ task, labels, onEdit, onDelete, onClick, showFullDate = fals
 
   return (
     <div
-      className=" dark:bg-gray-700 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200 dark:border-gray-600 bg-black"
+      className="bg-gray-700 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-600"
       onClick={onClick}
     >
-      <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
+      <h3 className="font-semibold text-gray-100 mb-2">
         {task.title}
       </h3>
 
       {task.shortDescription && (
-        <p className="text-sm text-gray-600 dark:text-gray-300 mb-2 line-clamp-2">
+        <p className="text-sm text-gray-300 mb-2 line-clamp-2">
           {task.shortDescription}
         </p>
       )}
 
-      <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 mb-2">
+      <div className="flex items-center gap-2 text-xs text-gray-400 mb-2">
         <Icon icon="mdi:clock-outline" size={16} />
         <span>
           {showFullDate
@@ -64,14 +64,14 @@ const TaskCard = ({ task, labels, onEdit, onDelete, onClick, showFullDate = fals
       )}
 
       {task.attachments && task.attachments.length > 0 && (
-        <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400 mb-2">
+        <div className="flex items-center gap-1 text-xs text-gray-400 mb-2">
           <Icon icon="mdi:attachment" size={16} />
           <span>{task.attachments.length} file đính kèm</span>
         </div>
       )}
 
       {task.subtasks && task.subtasks.length > 0 && (
-        <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400 mb-2">
+        <div className="flex items-center gap-1 text-xs text-gray-400 mb-2">
           <Icon icon="mdi:format-list-checks" size={16} />
           <span>
             {task.subtasks.filter(s => s.completed).length}/{task.subtasks.length} hoàn thành
@@ -85,7 +85,7 @@ const TaskCard = ({ task, labels, onEdit, onDelete, onClick, showFullDate = fals
             e.stopPropagation();
             onEdit();
           }}
-          className="p-1 text-gray-500 hover:text-primary-500 transition-colors"
+          className="p-1 text-gray-400 hover:text-blue-400 transition-colors"
         >
           <Icon icon="mdi:pencil" size={18} />
         </button>
@@ -94,7 +94,7 @@ const TaskCard = ({ task, labels, onEdit, onDelete, onClick, showFullDate = fals
             e.stopPropagation();
             onDelete();
           }}
-          className="p-1 text-gray-500 hover:text-red-500 transition-colors"
+          className="p-1 text-gray-400 hover:text-red-400 transition-colors"
         >
           <Icon icon="mdi:delete" size={18} />
         </button>
@@ -104,4 +104,3 @@ const TaskCard = ({ task, labels, onEdit, onDelete, onClick, showFullDate = fals
 };
 
 export default TaskCard;
-

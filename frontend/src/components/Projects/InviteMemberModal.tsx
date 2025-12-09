@@ -9,9 +9,6 @@ interface InviteMemberModalProps {
   onSuccess: () => void;
 }
 
-/**
- * Invite Member Modal
- */
 const InviteMemberModal = ({ projectId, onClose, onSuccess }: InviteMemberModalProps) => {
   const [email, setEmail] = useState('');
   const [role, setRole] = useState<'viewer' | 'editor'>('editor');
@@ -25,7 +22,6 @@ const InviteMemberModal = ({ projectId, onClose, onSuccess }: InviteMemberModalP
       return;
     }
 
-    // Basic email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       toast.error('Email không hợp lệ');
@@ -48,14 +44,14 @@ const InviteMemberModal = ({ projectId, onClose, onSuccess }: InviteMemberModalP
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-[#57595B] rounded-lg shadow-xl p-6 w-full max-w-md">
+      <div className="bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-md">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-2xl font-bold text-gray-50">
+          <h2 className="text-2xl font-bold text-gray-100">
             Mời thành viên
           </h2>
           <button
             onClick={onClose}
-            className="text-gray-500 hover:text-gray-700 dark:text-gray-400"
+            className="text-gray-400 hover:text-gray-200"
           >
             <Icon icon="mdi:close" size={24} />
           </button>
@@ -63,7 +59,7 @@ const InviteMemberModal = ({ projectId, onClose, onSuccess }: InviteMemberModalP
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-50 mb-1">
+            <label className="block text-sm font-medium text-gray-300 mb-1">
               Email *
             </label>
             <input
@@ -71,13 +67,13 @@ const InviteMemberModal = ({ projectId, onClose, onSuccess }: InviteMemberModalP
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="input bg-transparent"
+              className="w-full px-3 py-2 border border-gray-600 rounded-md bg-gray-700 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               placeholder="example@email.com"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-50 mb-1">
+            <label className="block text-sm font-medium text-gray-300 mb-1">
               Vai trò *
             </label>
             <div className="space-y-2">
@@ -88,11 +84,11 @@ const InviteMemberModal = ({ projectId, onClose, onSuccess }: InviteMemberModalP
                   value="editor"
                   checked={role === 'editor'}
                   onChange={() => setRole('editor')}
-                  className="w-4 h-4"
+                  className="w-4 h-4 text-blue-500 border-gray-600 bg-gray-700 focus:ring-blue-500"
                 />
                 <div>
-                  <span className="text-gray-300  font-medium">Biên tập viên</span>
-                  <p className="text-sm text-gray-200 dark:text-gray-400">
+                  <span className="text-gray-100 font-medium">Biên tập viên</span>
+                  <p className="text-sm text-gray-400">
                     Có thể tạo, chỉnh sửa và xóa task
                   </p>
                 </div>
@@ -104,11 +100,11 @@ const InviteMemberModal = ({ projectId, onClose, onSuccess }: InviteMemberModalP
                   value="viewer"
                   checked={role === 'viewer'}
                   onChange={() => setRole('viewer')}
-                  className="w-4 h-4"
+                  className="w-4 h-4 text-blue-500 border-gray-600 bg-gray-700 focus:ring-blue-500"
                 />
                 <div>
-                  <span className="text-gray-300 font-medium">Người xem</span>
-                  <p className="text-sm text-gray-200 dark:text-gray-400">
+                  <span className="text-gray-100 font-medium">Người xem</span>
+                  <p className="text-sm text-gray-400">
                     Chỉ có thể xem dự án
                   </p>
                 </div>
@@ -120,14 +116,14 @@ const InviteMemberModal = ({ projectId, onClose, onSuccess }: InviteMemberModalP
             <button
               type="button"
               onClick={onClose}
-              className="btn btn-secondary bg-slate-400 hover:scale-95"
+              className="px-4 py-2 bg-gray-600 text-gray-100 rounded-md hover:bg-gray-500 transition-colors"
               disabled={isInviting}
             >
               Hủy
             </button>
             <button
               type="submit"
-              className="btn btn-primary hover:scale-95 bg-[#234C6A] hover:bg-[#234C9A]"
+              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-500 transition-colors"
               disabled={isInviting}
             >
               {isInviting ? 'Đang gửi...' : 'Gửi lời mời'}
@@ -140,4 +136,3 @@ const InviteMemberModal = ({ projectId, onClose, onSuccess }: InviteMemberModalP
 };
 
 export default InviteMemberModal;
-

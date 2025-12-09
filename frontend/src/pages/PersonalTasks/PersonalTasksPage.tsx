@@ -12,9 +12,6 @@ import ConfirmDialog from '../../components/Common/ConfirmDialog';
 import Icon from '../../components/Icon/Icon';
 import { format } from 'date-fns';
 
-/**
- * Personal Tasks Page with Timeline
- */
 const PersonalTasksPage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { tasks, isLoading } = useSelector((state: RootState) => state.tasks);
@@ -54,7 +51,6 @@ const PersonalTasksPage = () => {
 
   const loadTasks = () => {
     if (selectedDate) {
-      // Filter by specific date
       const startDate = new Date(selectedDate);
       startDate.setHours(0, 0, 0, 0);
       const endDate = new Date(selectedDate);
@@ -67,7 +63,6 @@ const PersonalTasksPage = () => {
         search: searchTerm || undefined
       }));
     } else {
-      // Show all tasks (no date filter)
       dispatch(fetchTasks({
         timeSlot: selectedTimeSlot || undefined,
         search: searchTerm || undefined
@@ -86,7 +81,6 @@ const PersonalTasksPage = () => {
     const sourceTimeSlot = source.droppableId;
 
     if (newTimeSlot !== sourceTimeSlot) {
-      // Calculate new time based on time slot
       const slot = timeSlots.find(s => s.id === newTimeSlot);
       if (slot && selectedDate) {
         const newStartTime = new Date(selectedDate);
@@ -138,7 +132,6 @@ const PersonalTasksPage = () => {
           await dispatch(deleteExistingTask(taskId)).unwrap();
           toast.success('Xóa công việc thành công');
           setConfirmDialog({ ...confirmDialog, isOpen: false });
-          // Close detail modal if it's open
           if (isDetailModalOpen && viewingTask?._id === taskId) {
             setIsDetailModalOpen(false);
             setViewingTask(null);
@@ -156,15 +149,15 @@ const PersonalTasksPage = () => {
   };
 
   return (
-    <div className="p-6">
+    <div className="p-6 bg-slate-900 min-h-screen">
       <div className="mb-6">
         <div className="flex items-center justify-between mb-4">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-3xl font-bold text-slate-100">
             Lịch trình cá nhân
           </h1>
           <button
             onClick={handleCreateTask}
-            className="btn btn-primary flex items-center gap-2 w-auto"
+            className="btn btn-primary flex items-center gap-2 w-auto bg-indigo-600 hover:bg-indigo-500 text-white"
           >
             <Icon icon="mdi:plus" size={20} />
             <span>Thêm công việc</span>
@@ -175,7 +168,7 @@ const PersonalTasksPage = () => {
           <div className="flex gap-2">
             <button
               onClick={() => setSelectedDate(null)}
-              className={`btn ${selectedDate === null ? 'btn-primary' : 'btn-secondary'} w-auto`}
+              className={`btn ${selectedDate === null ? 'bg-indigo-600 text-white' : 'bg-slate-700 text-slate-300'} w-auto`}
             >
               <Icon icon="mdi:calendar-multiple" size={18} className="inline mr-1" />
               Tất cả ngày
@@ -184,7 +177,7 @@ const PersonalTasksPage = () => {
               type="date"
               value={selectedDate ? format(selectedDate, 'yyyy-MM-dd') : ''}
               onChange={(e) => setSelectedDate(e.target.value ? new Date(e.target.value) : null)}
-              className="input"
+              className="input bg-slate-800 border-slate-700 text-slate-100"
               placeholder="Chọn ngày"
             />
           </div>
@@ -193,12 +186,12 @@ const PersonalTasksPage = () => {
             placeholder="Tìm kiếm..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="input flex-1 "
+            className="input flex-1 bg-slate-800 border-slate-700 text-slate-100 placeholder-slate-400"
           />
           <select
             value={selectedTimeSlot}
             onChange={(e) => setSelectedTimeSlot(e.target.value)}
-            className="input"
+            className="input bg-slate-800 border-slate-700 text-slate-100"
           >
             <option value="">Tất cả khung giờ</option>
             {timeSlots.map(slot => (
@@ -210,20 +203,19 @@ const PersonalTasksPage = () => {
 
       {isLoading ? (
         <div className="flex items-center justify-center py-12">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-500"></div>
         </div>
       ) : selectedDate ? (
-        // Timeline view for specific date
         <DragDropContext onDragEnd={handleDragEnd}>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {timeSlots.map(slot => (
-              <div key={slot.id} className="card">
+              <div key={slot.id} className="bg-slate-800 border border-slate-700 rounded-lg p-4">
                 <div className="flex items-center gap-2 mb-4">
-                  <Icon icon={slot.icon} size={24} className="text-primary-500" />
-                  <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+                  <Icon icon={slot.icon} size={24} className="text-indigo-400" />
+                  <h2 className="text-lg font-semibold text-slate-100">
                     {slot.name}
                   </h2>
-                  <span className="ml-auto text-sm text-gray-500 dark:text-gray-400">
+                  <span className="ml-auto text-sm text-slate-400">
                     {getTasksByTimeSlot(slot.id).length}
                   </span>
                 </div>
@@ -233,8 +225,7 @@ const PersonalTasksPage = () => {
                     <div
                       ref={provided.innerRef}
                       {...provided.droppableProps}
-                      className={`min-h-[200px] space-y-2 ${snapshot.isDraggingOver ? 'bg-primary-50 dark:bg-primary-900/20' : ''
-                        }`}
+                      className={`min-h-[200px] space-y-2 ${snapshot.isDraggingOver ? 'bg-indigo-900/20' : ''}`}
                     >
                       {getTasksByTimeSlot(slot.id).map((task, index) => (
                         <Draggable key={task._id} draggableId={task._id} index={index}>
@@ -243,8 +234,7 @@ const PersonalTasksPage = () => {
                               ref={provided.innerRef}
                               {...provided.draggableProps}
                               {...provided.dragHandleProps}
-                              className={`${snapshot.isDragging ? 'opacity-50' : ''
-                                }`}
+                              className={`${snapshot.isDragging ? 'opacity-50' : ''}`}
                             >
                               <TaskCard
                                 task={task}
@@ -267,20 +257,19 @@ const PersonalTasksPage = () => {
           </div>
         </DragDropContext>
       ) : (
-        // List view for all days
         <div className="space-y-6">
           {timeSlots.map(slot => {
             const slotTasks = getTasksByTimeSlot(slot.id);
             if (slotTasks.length === 0) return null;
 
             return (
-              <div key={slot.id} className="card">
+              <div key={slot.id} className="bg-slate-800 border border-slate-700 rounded-lg p-6">
                 <div className="flex items-center gap-2 mb-4">
-                  <Icon icon={slot.icon} size={24} className="text-primary-500" />
-                  <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+                  <Icon icon={slot.icon} size={24} className="text-indigo-400" />
+                  <h2 className="text-lg font-semibold text-slate-100">
                     {slot.name}
                   </h2>
-                  <span className="ml-auto text-sm text-gray-500 dark:text-gray-400">
+                  <span className="ml-auto text-sm text-slate-400">
                     {slotTasks.length} công việc
                   </span>
                 </div>
@@ -302,14 +291,13 @@ const PersonalTasksPage = () => {
           })}
           {tasks.length === 0 && (
             <div className="text-center py-12">
-              <Icon icon="mdi:clipboard-text-outline" size={64} className="mx-auto text-gray-400 mb-4" />
-              <p className="text-gray-600 dark:text-gray-400">Chưa có công việc nào</p>
+              <Icon icon="mdi:clipboard-text-outline" size={64} className="mx-auto text-slate-400 mb-4" />
+              <p className="text-slate-400">Chưa có công việc nào</p>
             </div>
           )}
         </div>
       )}
 
-      {/* Task Detail Modal (View Only) */}
       {isDetailModalOpen && viewingTask && (
         <TaskDetailModal
           task={viewingTask}
@@ -326,7 +314,6 @@ const PersonalTasksPage = () => {
         />
       )}
 
-      {/* Task Edit Modal */}
       {isModalOpen && (
         <TaskModal
           task={editingTask}
@@ -370,4 +357,3 @@ const PersonalTasksPage = () => {
 };
 
 export default PersonalTasksPage;
-
