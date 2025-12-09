@@ -6,9 +6,6 @@ import { loginWithGoogle } from '../../store/slices/auth.slice';
 import { toast } from 'react-toastify';
 import Icon from '../../components/Icon/Icon';
 
-/**
- * Login page with darker background and highlighted blue logo text
- */
 const LoginPage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
@@ -17,7 +14,7 @@ const LoginPage = () => {
   useEffect(() => {
     if (isAuthenticated && !isLoading && user) {
       setTimeout(() => {
-        navigate('/', { replace: true });
+        navigate('/tasks', { replace: true });
       }, 100);
     }
   }, [isAuthenticated, isLoading, user, navigate]);
@@ -69,7 +66,7 @@ const LoginPage = () => {
       try {
         const result = await dispatch(loginWithGoogle(response.credential)).unwrap();
         toast.success('Đăng nhập thành công!');
-        navigate('/', { replace: true });
+        navigate('/tasks', { replace: true });
       } catch (error: any) {
         toast.error(error || 'Đăng nhập thất bại');
       }
@@ -121,6 +118,15 @@ const LoginPage = () => {
         </div>
 
         <div className="text-center mt-6">
+          <button
+            onClick={() => navigate('/')}
+            className="text-gray-400 hover:text-gray-300 text-sm underline"
+          >
+            ← Quay lại trang chủ
+          </button>
+        </div>
+
+        <div className="text-center mt-4">
           <p className="text-gray-400 dark:text-gray-500 text-sm">
             © 2025 Schedule App. All rights reserved.
           </p>

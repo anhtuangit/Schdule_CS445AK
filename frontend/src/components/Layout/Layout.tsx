@@ -26,7 +26,7 @@ const Layout = () => {
 
         <nav className="px-4 space-y-2">
           <Link
-            to="/"
+            to="/tasks"
             className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-700 focus:bg-gray-700 focus:border-l-4 transition-colors"
           >
             <Icon icon="mdi:calendar-check" size={20} />
